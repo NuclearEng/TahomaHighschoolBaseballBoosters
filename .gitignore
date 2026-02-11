@@ -18,7 +18,6 @@ downloaded_files/
 # Node / Next.js
 node_modules/
 .next/
-out/
 
 # Screenshots & playwright artifacts
 *.png
