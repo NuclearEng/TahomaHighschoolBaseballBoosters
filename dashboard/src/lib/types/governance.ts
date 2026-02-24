@@ -68,10 +68,10 @@ export interface ProgramInfo {
   email: string;
   website: string;
   socialMedia: {
-    twitter?: string;
+    facebook?: string;
     instagram?: string;
     tiktok?: string;
-    facebook?: string;
+    x?: string;
   };
   sponsors: Sponsor[];
 }

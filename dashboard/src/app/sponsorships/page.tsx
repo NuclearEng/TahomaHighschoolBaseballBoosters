@@ -161,7 +161,7 @@ export default function SponsorshipsPage() {
                 <p className="text-sm font-medium">Active Social Media Presence</p>
                 <p className="text-xs text-muted-foreground">
                   Engaged community across{" "}
-                  <a href={info.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="text-gold-link hover:underline">Twitter</a>,{" "}
+                  <a href={info.socialMedia.x} target="_blank" rel="noopener noreferrer" className="text-gold-link hover:underline">X</a>,{" "}
                   <a href={info.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="text-gold-link hover:underline">Instagram</a>,{" "}
                   <a href={info.socialMedia.tiktok} target="_blank" rel="noopener noreferrer" className="text-gold-link hover:underline">TikTok</a>, and{" "}
                   <a href={info.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="text-gold-link hover:underline">Facebook</a>

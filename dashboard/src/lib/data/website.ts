@@ -10,10 +10,10 @@ export function getProgramInfo(): ProgramInfo {
     email: 'tahomabaseballbooster@gmail.com',
     website: 'https://www.tahomabearsbaseball.com',
     socialMedia: {
-      twitter: 'https://twitter.com/TahomaBaseball',
-      instagram: 'https://www.instagram.com/tahomabaseball',
-      tiktok: 'https://www.tiktok.com/@tahomabaseball',
-      facebook: 'https://www.facebook.com/TahomaBaseball',
+      facebook: 'https://www.facebook.com/profile.php?id=61573587485878',
+      instagram: 'https://www.instagram.com/tahoma_baseball/',
+      tiktok: 'https://www.tiktok.com/@tahoma_baseball',
+      x: 'https://x.com/TahomaBaseball',
     },
     sponsors: [
       {

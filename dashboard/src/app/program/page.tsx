@@ -54,19 +54,19 @@ export default function ProgramPage() {
 
   const socialLinks = [
     {
-      name: "Twitter / X",
-      url: info.socialMedia.twitter,
+      name: "X",
+      url: info.socialMedia.x,
       handle: "@TahomaBaseball",
     },
     {
       name: "Instagram",
       url: info.socialMedia.instagram,
-      handle: "@tahomabaseball",
+      handle: "@tahoma_baseball",
     },
     {
       name: "TikTok",
       url: info.socialMedia.tiktok,
-      handle: "@tahomabaseball",
+      handle: "@tahoma_baseball",
     },
     {
       name: "Facebook",
