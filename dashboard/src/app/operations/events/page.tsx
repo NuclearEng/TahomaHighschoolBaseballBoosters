@@ -105,12 +105,12 @@ const EVENTS: (Event & { icon: React.ElementType; exactDate?: string })[] = [
   },
   {
     name: "UW Team Night",
-    date: "May 1, 2026 (TBD)",
-    exactDate: "2026-05-01",
+    date: "May 2, 2026",
+    exactDate: "2026-05-02",
     category: "celebration",
     status: "planned",
     description:
-      "Team outing to a University of Washington baseball game. Preferred date: Friday, May 1.",
+      "Team outing to a University of Washington baseball game.",
     icon: Trophy,
   },
   {
@@ -245,19 +245,36 @@ export default function EventsPage() {
     return 0;
   });
 
-  // Key season dates
-  const keyDates = [
+  // Key season dates + 2026 varsity game schedule
+  const keyDates: { date: string; label: string; game?: boolean }[] = [
     { date: "Feb 2", label: "Player Meeting (2:30pm PAC)" },
     { date: "Feb 10", label: "School Levy Vote" },
     { date: "Mar 2-3", label: "Tryouts at Rock Creek" },
     { date: "Mar 6", label: "Uniform Distribution" },
     { date: "Mar 7", label: "Blue vs. Gold Games" },
     { date: "Mar 10", label: "Parent Meeting & Media Day" },
-    { date: "Mar 11", label: "First Day of Games" },
+    { date: "Mar 11", label: "@ O'Dea, 6:00pm (Opener)", game: true },
+    { date: "Mar 14", label: "@ Union (DH), 11am & 2pm", game: true },
     { date: "Mar 16", label: "Call/Text-A-Thon" },
+    { date: "Mar 18", label: "vs. Skyline, 6:00pm", game: true },
     { date: "Mar 20", label: "Scholarship Applications Due" },
-    { date: "May 1", label: "UW Team Night (TBD)" },
-    { date: "May 5", label: "Senior Night" },
+    { date: "Mar 24", label: "vs. Auburn Riverside, 6:00pm", game: true },
+    { date: "Mar 25", label: "@ Auburn Riverside, 4:00pm", game: true },
+    { date: "Mar 31", label: "vs. Kennedy Catholic, 6:00pm", game: true },
+    { date: "Apr 1", label: "@ Kennedy Catholic, 4:00pm", game: true },
+    { date: "Apr 3", label: "@ Kentlake, 4:00pm", game: true },
+    { date: "Apr 7", label: "@ Mount Rainier, 4:00pm", game: true },
+    { date: "Apr 8", label: "vs. Mount Rainier, 4:00pm", game: true },
+    { date: "Apr 14", label: "@ Kentwood, 4:00pm", game: true },
+    { date: "Apr 15", label: "vs. Kentwood, 7:00pm", game: true },
+    { date: "Apr 17", label: "vs. Mercer Island, 6:00pm", game: true },
+    { date: "Apr 21", label: "@ Kentridge, 6:00pm", game: true },
+    { date: "Apr 22", label: "vs. Kentridge, 7:00pm", game: true },
+    { date: "Apr 28", label: "vs. Stadium, 7:00pm", game: true },
+    { date: "Apr 29", label: "@ Stadium, 4:00pm", game: true },
+    { date: "May 2", label: "UW Team Night" },
+    { date: "May 4", label: "@ Auburn, 7:00pm", game: true },
+    { date: "May 5", label: "vs. Auburn, 7:00pm (Senior Night)", game: true },
     { date: "Jun 1", label: "End of Season Banquet" },
     { date: "Jun 4", label: "Scholarships & Awards Night" },
     { date: "Jun 30", label: "Summer Camp (Day 1)" },
@@ -303,10 +320,10 @@ export default function EventsPage() {
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {keyDates.map((kd) => (
               <div
-                key={kd.label}
-                className="flex items-center gap-3 rounded-lg border p-2.5"
+                key={kd.date + kd.label}
+                className={`flex items-center gap-3 rounded-lg border p-2.5 ${kd.game ? "border-[#FFCB1E]/40 bg-[#FFCB1E]/5" : ""}`}
               >
-                <span className="shrink-0 rounded bg-[#00357b]/5 px-2 py-1 text-xs font-semibold text-[#00357b] tabular-nums">
+                <span className={`shrink-0 rounded px-2 py-1 text-xs font-semibold tabular-nums bg-[#00357b]/5 text-[#00357b]`}>
                   {kd.date}
                 </span>
                 <span className="text-sm">{kd.label}</span>
@@ -353,8 +370,8 @@ export default function EventsPage() {
 
       {/* Source Note */}
       <p className="text-xs text-muted-foreground">
-        Dates sourced from board meeting minutes (1/14/2026, 12/10/2025, 10/28/2025).
-        Dates marked TBD are subject to confirmation.
+        Dates sourced from board meeting minutes (1/14/2026, 12/10/2025, 10/28/2025) and
+        tahomabearsbaseball.com/calendar. Game dates highlighted in gold. Dates marked TBD are subject to confirmation.
       </p>
     </div>
   );
