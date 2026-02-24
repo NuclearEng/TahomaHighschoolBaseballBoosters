@@ -227,8 +227,9 @@ export default async function VolunteersPage() {
 
       {/* Team Sections */}
       <div className="space-y-4">
-        <VolunteerRoleTable needs={volunteers.varsity} team="Varsity" />
-        <VolunteerRoleTable needs={volunteers.jv} team="JV" />
+        <VolunteerRoleTable needs={volunteers.varsityGold} team="Varsity Gold" />
+        <VolunteerRoleTable needs={volunteers.jvBlue} team="JV Blue" />
+        <VolunteerRoleTable needs={volunteers.jvGold} team="JV Gold" />
         <VolunteerRoleTable needs={volunteers.cTeam} team="C Team" />
       </div>
     </div>

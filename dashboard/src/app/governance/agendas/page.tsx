@@ -142,12 +142,13 @@ function structureMeetingHtml(raw: string): string {
   return out;
 }
 
-// Only these 3 meetings are displayed
 const MEETING_DATES = [
+  { month: 9, day: 23, year: 2025 },
   { month: 10, day: 28, year: 2025 },
   { month: 12, day: 10, year: 2025 },
   { month: 1, day: 14, year: 2026 },
   { month: 2, day: 11, year: 2026 },
+  { month: 2, day: 23, year: 2026 },
 ];
 
 function matchesMeetingDate(

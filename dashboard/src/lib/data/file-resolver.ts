@@ -80,20 +80,54 @@ export async function getHistoricalBudgetFiles(): Promise<string[]> {
   return [...new Set([...standardFiles, ...oldFormatFiles])].sort();
 }
 
+/** Extract a M-D-YYYY date string from a filename for deduplication. */
+function extractDateKey(filePath: string): string | null {
+  const match = path.basename(filePath).match(/(\d{1,2})-(\d{1,2})-(\d{4})/);
+  return match ? `${match[1]}-${match[2]}-${match[3]}` : null;
+}
+
 export async function getBoardAgendaFiles(): Promise<string[]> {
-  return findFiles('*.docx',
-    path.join(DOWNLOADED_FILES_DIR, '2026 Board Meeting Agenda'));
+  // Agendas may live in either folder depending on when they were synced
+  const [newFolder, oldFolder] = await Promise.all([
+    findFiles('*.docx', path.join(DOWNLOADED_FILES_DIR, '2025-26 Board Meeting Agenda')),
+    findFiles('*.docx', path.join(DOWNLOADED_FILES_DIR, '2026 Board Meeting Agenda')),
+  ]);
+  // Deduplicate by date — prefer new folder files over old
+  const seenDates = new Set<string>();
+  const results: string[] = [];
+  for (const f of [...newFolder, ...oldFolder]) {
+    const dateKey = extractDateKey(f);
+    const key = dateKey || path.basename(f);
+    if (!seenDates.has(key)) {
+      seenDates.add(key);
+      results.push(f);
+    }
+  }
+  return results.sort();
 }
 
 export async function getMeetingMinutesFiles(): Promise<string[]> {
-  // Board meeting records live in two places:
-  // 1. "2026 Board Meeting Agenda" — current season agendas/minutes (2025-2026)
-  // 2. "Secretary " — historical minutes archive (2022-2025)
-  const [boardAgendaFiles, secretaryFiles] = await Promise.all([
+  // Board meeting records live in multiple places:
+  // 1. "2025-26 Board Meeting Agenda" — current season agendas/minutes
+  // 2. "2026 Board Meeting Agenda" — legacy folder
+  // 3. "Secretary " — historical minutes archive (2022-2025)
+  const [newBoardFiles, oldBoardFiles, secretaryFiles] = await Promise.all([
+    findFiles('*.docx', path.join(DOWNLOADED_FILES_DIR, '2025-26 Board Meeting Agenda')),
     findFiles('*.docx', path.join(DOWNLOADED_FILES_DIR, '2026 Board Meeting Agenda')),
     findFiles('*.docx', path.join(DOWNLOADED_FILES_DIR, 'Secretary ')),
   ]);
-  return [...boardAgendaFiles, ...secretaryFiles].sort();
+  // Deduplicate by date — prefer new folder, then old folder, then secretary
+  const seenDates = new Set<string>();
+  const results: string[] = [];
+  for (const f of [...newBoardFiles, ...oldBoardFiles, ...secretaryFiles]) {
+    const dateKey = extractDateKey(f);
+    const key = dateKey || path.basename(f);
+    if (!seenDates.has(key)) {
+      seenDates.add(key);
+      results.push(f);
+    }
+  }
+  return results.sort();
 }
 
 export async function getVolunteerFiles(): Promise<string[]> {

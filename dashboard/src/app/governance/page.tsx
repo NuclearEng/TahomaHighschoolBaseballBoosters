@@ -24,7 +24,7 @@ const governanceLinks = [
   {
     title: "Board Meetings",
     description:
-      "Executive board meeting agendas and minutes for October 2025, December 2025, and January 2026.",
+      "Executive board meeting agendas and minutes for the 2025–2026 season (September through February).",
     href: "/governance/agendas",
     icon: ClipboardList,
     badge: "Agendas",

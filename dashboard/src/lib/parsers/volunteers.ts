@@ -5,7 +5,7 @@ import { getVolunteerFiles } from '../data/file-resolver';
 import path from 'path';
 
 // Volunteer files structure (2026 * Team Needs.xlsx):
-// Row 0: "VARSITY TEAM NEEDS:" (or JV, C TEAM)
+// Row 0: "VARSITY TEAM NEEDS:" (or JV Blue, JV Gold, C TEAM)
 // Row 1: "Throughout Season"
 // Rows 3+: Role descriptions with numbered slots (1), 2), etc.)
 // Role headers are descriptive text, followed by numbered empty slots for names
@@ -13,21 +13,29 @@ import path from 'path';
 //         ["1)", "", ""]
 //         ["2)", "", ""]
 
+type TeamName = VolunteerNeed['team'];
+
+function detectTeam(filePath: string, data: unknown[][]): TeamName {
+  const fileName = path.basename(filePath).toLowerCase();
+  const firstRow = String(data[0]?.[0] || '').toLowerCase();
+
+  // Check specific teams first (order matters — check specific before generic)
+  if (fileName.includes('jv blue') || firstRow.includes('jv blue')) return 'JV Blue';
+  if (fileName.includes('jv gold') || firstRow.includes('jv gold')) return 'JV Gold';
+  if (fileName.includes('c team') || firstRow.includes('c team')) return 'C Team';
+  if (fileName.includes('varsity') || firstRow.includes('varsity')) return 'Varsity Gold';
+  // Generic JV → JV Blue as default
+  if (fileName.includes('jv') || firstRow.includes('jv')) return 'JV Blue';
+
+  return 'Varsity Gold';
+}
+
 function parseVolunteerFile(filePath: string): VolunteerNeed[] {
   const wb = readWorkbook(filePath);
   const data = getSheetData(wb);
   const needs: VolunteerNeed[] = [];
 
-  // Determine team from filename or first row
-  const fileName = path.basename(filePath).toLowerCase();
-  let team: 'Varsity' | 'JV' | 'C Team' = 'Varsity';
-  if (fileName.includes('jv')) team = 'JV';
-  else if (fileName.includes('c team')) team = 'C Team';
-  else {
-    const firstRow = String(data[0]?.[0] || '').toLowerCase();
-    if (firstRow.includes('jv')) team = 'JV';
-    else if (firstRow.includes('c team')) team = 'C Team';
-  }
+  const team = detectTeam(filePath, data);
 
   let currentRole = '';
 
@@ -69,22 +77,46 @@ export async function getVolunteerSummary(): Promise<VolunteerSummary> {
   return cachedMultiParse(files, async (fps) => {
     const allNeeds: VolunteerNeed[] = [];
 
-    for (const fp of fps) {
+    // Track which specific teams we've seen to skip generic files
+    const teamsFromSpecific = new Set<string>();
+
+    // First pass: parse specific team files (JV Blue, JV Gold, Varsity Gold)
+    const specificFiles = fps.filter(fp => {
+      const name = path.basename(fp).toLowerCase();
+      return name.includes('jv blue') || name.includes('jv gold') || name.includes('varsity gold');
+    });
+    for (const fp of specificFiles) {
       try {
         const needs = parseVolunteerFile(fp);
+        allNeeds.push(...needs);
+        if (needs.length > 0) teamsFromSpecific.add(needs[0].team);
+      } catch {
+        // Skip files that can't be parsed
+      }
+    }
+
+    // Second pass: parse remaining files, skipping generic versions of teams we already have
+    for (const fp of fps) {
+      if (specificFiles.includes(fp)) continue;
+      try {
+        const needs = parseVolunteerFile(fp);
+        // Skip if we already have specific data for this team
+        if (needs.length > 0 && teamsFromSpecific.has(needs[0].team)) continue;
         allNeeds.push(...needs);
       } catch {
         // Skip files that can't be parsed
       }
     }
 
-    const varsity = allNeeds.filter(n => n.team === 'Varsity');
-    const jv = allNeeds.filter(n => n.team === 'JV');
+    const varsityGold = allNeeds.filter(n => n.team === 'Varsity Gold');
+    const jvBlue = allNeeds.filter(n => n.team === 'JV Blue');
+    const jvGold = allNeeds.filter(n => n.team === 'JV Gold');
     const cTeam = allNeeds.filter(n => n.team === 'C Team');
 
     return {
-      varsity,
-      jv,
+      varsityGold,
+      jvBlue,
+      jvGold,
       cTeam,
       totalNeeds: allNeeds.length,
       totalFilled: allNeeds.filter(n => n.filled).length,

@@ -35,15 +35,16 @@ export interface UniformInventory {
 export interface VolunteerNeed {
   role: string;
   description?: string;
-  team: 'Varsity' | 'JV' | 'C Team';
+  team: 'Varsity Gold' | 'JV Blue' | 'JV Gold' | 'C Team';
   filled: boolean;
   volunteerName?: string;
   notes?: string;
 }
 
 export interface VolunteerSummary {
-  varsity: VolunteerNeed[];
-  jv: VolunteerNeed[];
+  varsityGold: VolunteerNeed[];
+  jvBlue: VolunteerNeed[];
+  jvGold: VolunteerNeed[];
   cTeam: VolunteerNeed[];
   totalNeeds: number;
   totalFilled: number;
