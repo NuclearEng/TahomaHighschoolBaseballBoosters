@@ -5,7 +5,7 @@ import {
   PartyPopper,
   Heart,
   ShoppingBag,
-  Timer,
+  HeartHandshake,
   Trophy,
   GraduationCap,
   Megaphone,
@@ -77,13 +77,13 @@ const EVENTS: (Event & { icon: React.ElementType; exactDate?: string })[] = [
     icon: Megaphone,
   },
   {
-    name: "Hour-A-Thon",
+    name: "Back the Bears Campaign",
     date: "February/March 2026",
     category: "fundraiser",
     status: "planned",
     description:
-      "Player-driven fundraiser where athletes collect pledges for hours of baseball activity. Major revenue source.",
-    icon: Timer,
+      "Community-driven fundraising campaign rallying support for the Tahoma Bears Baseball Program. Major revenue source.",
+    icon: HeartHandshake,
   },
   {
     name: "Hat Sales",

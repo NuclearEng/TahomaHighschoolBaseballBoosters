@@ -45,7 +45,7 @@ const priorityConfig = {
 const FUNDRAISING_SOURCES = [
   "Concessions",
   "Hats",
-  "Hour-A-Thon",
+  "Back the Bears Campaign",
   "Summer Camp",
   "Donations",
   "Media Sponsors",
@@ -237,7 +237,7 @@ function generateFundraisingInsights(
 
   // Recurring vs Event Revenue (from historical data)
   const recurringKeywords = ["donation", "sponsor", "media sponsor"];
-  const eventKeywords = ["hour-a-thon", "camp", "concession", "hat", "misc"];
+  const eventKeywords = ["back the bears", "camp", "concession", "hat", "misc"];
   let recurringTotal = 0;
   let eventTotal = 0;
   for (const [name, history] of sourceHistory) {
@@ -258,7 +258,7 @@ function generateFundraisingInsights(
       type: "recommendation",
       category: "long-term-strategy",
       title: "Recurring vs Event Revenue",
-      description: `Historically, ${recurringPct}% of revenue is recurring (donations, sponsors) and ${eventPct}% is event-based (Hour-A-Thon, camp, concessions). ${isEventHeavy ? "Over 70% of revenue has depended on one-time events — this is fragile. Building recurring programs (monthly giving, annual sponsorships, membership tiers) would create a more stable financial base." : "Healthy historical mix of recurring and event revenue. Continue strengthening recurring sources to reduce year-to-year volatility."}`,
+      description: `Historically, ${recurringPct}% of revenue is recurring (donations, sponsors) and ${eventPct}% is event-based (Back the Bears, camp, concessions). ${isEventHeavy ? "Over 70% of revenue has depended on one-time events — this is fragile. Building recurring programs (monthly giving, annual sponsorships, membership tiers) would create a more stable financial base." : "Healthy historical mix of recurring and event revenue. Continue strengthening recurring sources to reduce year-to-year volatility."}`,
       metric: "Event Dependency",
       value: Number(eventPct),
       priority: isEventHeavy ? "high" : "low",

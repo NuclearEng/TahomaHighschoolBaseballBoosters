@@ -18,7 +18,7 @@ import { YoYRevenueChart } from "./yoy-chart";
 const FUNDRAISING_SOURCES = [
   "Concessions",
   "Hats",
-  "Hour-A-Thon",
+  "Back the Bears Campaign",
   "Summer Camp",
   "Donations",
   "Media Sponsors",
