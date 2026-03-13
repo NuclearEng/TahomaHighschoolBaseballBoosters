@@ -8,7 +8,6 @@ import {
   HeartHandshake,
   Trophy,
   GraduationCap,
-  Megaphone,
   Utensils,
   Swords,
   Shirt,
@@ -67,22 +66,13 @@ const EVENTS: (Event & { icon: React.ElementType; exactDate?: string })[] = [
     icon: Trophy,
   },
   {
-    name: "Call/Text-A-Thon",
+    name: "Back the Bears Campaign",
     date: "March 16, 2026",
     exactDate: "2026-03-16",
     category: "fundraiser",
     status: "planned",
     description:
-      "4:30-6:30pm at Tahoma Commons. QR code donation format. Major fundraising event for the program.",
-    icon: Megaphone,
-  },
-  {
-    name: "Back the Bears Campaign",
-    date: "February/March 2026",
-    category: "fundraiser",
-    status: "planned",
-    description:
-      "Community-driven fundraising campaign rallying support for the Tahoma Bears Baseball Program. Major revenue source.",
+      "4:30-6:30pm at THS Commons. Annual fundraising event for the Tahoma Bears Baseball Program.",
     icon: HeartHandshake,
   },
   {
@@ -255,7 +245,7 @@ export default function EventsPage() {
     { date: "Mar 10", label: "Parent Meeting & Media Day" },
     { date: "Mar 11", label: "@ O'Dea, 6:00pm (Opener)", game: true },
     { date: "Mar 14", label: "@ Union (DH), 11am & 2pm", game: true },
-    { date: "Mar 16", label: "Call/Text-A-Thon" },
+    { date: "Mar 16", label: "Back the Bears Campaign" },
     { date: "Mar 18", label: "vs. Skyline, 6:00pm", game: true },
     { date: "Mar 20", label: "Scholarship Applications Due" },
     { date: "Mar 24", label: "vs. Auburn Riverside, 6:00pm", game: true },
